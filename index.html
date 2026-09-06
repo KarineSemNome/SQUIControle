@@ -1278,7 +1278,7 @@ button:hover { background:linear-gradient(135deg,#1d4ed8,#0f8799); }
       <form onsubmit="event.preventDefault(); fazerLogin();">
         <div class="input-group">
           <label for="usuarioLogin">Digite seu nome:</label>
-          <input type="text" id="usuarioLogin" placeholder="Ex: Ana Silva" oninput="this.value = this.value.replace(/[^A-Za-zÀ-ÿ\s]/g, '')">
+          <input type="text" id="usuarioLogin" placeholder="Ex: Ana Silva" pattern="[A-Za-zÀ-ÿ]{3,}(?:\s+[A-Za-zÀ-ÿ]{3,})+" title="Informe pelo menos dois nomes, com no mínimo 3 letras cada." oninput="this.value = this.value.replace(/[^A-Za-zÀ-ÿ\s]/g, '')">
         </div>
         <div class="input-group">
           <label for="senhaLogin">Digite sua senha:</label>
@@ -1293,8 +1293,8 @@ button:hover { background:linear-gradient(135deg,#1d4ed8,#0f8799); }
       <form onsubmit="event.preventDefault(); cadastrarUsuario();">
         <div class="input-group">
           <label for="usuarioCadastro">Seu Nome + Sobrenome:</label>
-          <input type="text" id="usuarioCadastro" placeholder="Ex: Ana Silva" oninput="this.value = this.value.replace(/[^A-Za-zÀ-ÿ\s]/g, '')">
-          <span class="dica-input">Use seu Nome + Sobrenome, por exemplo "Ana Silva".</span>
+          <input type="text" id="usuarioCadastro" placeholder="Ex: Ana Kin" pattern="[A-Za-zÀ-ÿ]{3,}(?:\s+[A-Za-zÀ-ÿ]{3,})+" title="Informe pelo menos dois nomes, com no mínimo 3 letras cada." oninput="this.value = this.value.replace(/[^A-Za-zÀ-ÿ\s]/g, '')">
+          <span class="dica-input">Informe pelo menos dois nomes, com 3 letras cada, por exemplo "Ana Kin".</span>
         </div>
         <div class="input-group">
           <label for="nascimentoCadastro">Data de nascimento (Opcional):</label>
@@ -4748,7 +4748,9 @@ window.apagarMeusPedidosAniversariante = async function() {
       const nascimento = formatarDataBR(document.getElementById('nascimentoCadastro').value);
       const senha = document.getElementById('senhaCadastro').value;
       const confirma = document.getElementById('senhaCadastroConfirma').value;
+      const nomes = nome.split(/\s+/).filter(Boolean);
       if (!nome || !senha || !confirma) return alert('Preencha nome e senha corretamente!');
+      if (nomes.length < 2 || nomes.some(parte => [...parte].length < 3)) return alert('Informe pelo menos dois nomes, com no mínimo 3 letras cada.');
       if (senha.length < 6) return alert('A senha deve ter no mínimo 6 caracteres.');
       if (senha !== confirma) return alert('As senhas não coincidem.');
       try {
@@ -4778,6 +4780,8 @@ window.apagarMeusPedidosAniversariante = async function() {
       const nome = document.getElementById('usuarioLogin').value.trim();
       const senha = document.getElementById('senhaLogin').value;
       if (!nome || !senha) return alert('Preencha seu nome e senha!');
+      const nomes = nome.split(/\s+/).filter(Boolean);
+      if (nomes.length < 2 || nomes.some(parte => [...parte].length < 3)) return alert('Informe pelo menos dois nomes, com no mínimo 3 letras cada.');
       try {
         const email = gerarEmailFicticio(nome);
         const cred = await signInWithEmailAndPassword(auth, email, senha);
