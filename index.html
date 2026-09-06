@@ -1231,6 +1231,28 @@ button:hover { background:linear-gradient(135deg,#1d4ed8,#0f8799); }
   .grupos-switch-text { min-width: 66px !important; font-size: 10px; }
 }
 
+/* Os ícones das abas são imagens diretamente dentro dos botões. */
+@media (max-width: 799px) {
+  .nav-tabs .tab-btn > img.nav-icon {
+    display: block !important;
+    width: 65px !important;
+    height: 65px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    max-width: 65px !important;
+    max-height: 65px !important;
+    flex: 0 0 65px !important;
+    object-fit: contain !important;
+    margin: 0 !important;
+  }
+
+  .nav-tabs .tab-btn {
+    flex-basis: 58px !important;
+    width: 58px !important;
+    min-width: 58px !important;
+  }
+}
+
 
 </style>
 </head>
